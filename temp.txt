@@ -1,0 +1,7 @@
+ # clf = GridSearchCV(estimator=model['estimator'], param_grid=parameters, cv=3)
+    # clf.fit(train_instances, judgements)
+    # best_estimator = clf.best_estimator_
+    # print('Best hyper parameters: ' + str(clf.best_params_))
+    #
+    # return [str(clf.best_params_), clf.best_score_,
+    #         best_estimator]

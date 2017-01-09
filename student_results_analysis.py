@@ -5,13 +5,15 @@ import seaborn as sns
 # import model_selection_util as ms
 # import feature_transformer as ft
 
-from model_selection_util import best_config,best_model,cv_score_gen,plot_learning_curve
-from feature_transformer import one_hot_dataframe, scaling_feature
-from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
+
+from model_selection_util import best_config,best_model,cv_score_gen,plot_learning_curve
+from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features
+from model_generation import regression_families, classification_families
+
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.model_selection import ShuffleSplit
-from sklearn.linear_model import Ridge,Lasso,ElasticNet
 
 data = pd.read_csv("Student Results.csv")
 # drop empty row from table
@@ -27,9 +29,13 @@ result.ix[:, 3:7] = result.ix[:, 3:7].astype(float)
 result.ix[:, 10:19] = result.ix[:, 10:19].astype(float)
 
 # store meta data for the table
-meta_data = {'Max': [100, 40, 10, 50, 20, 30, 20, 70, 100, 100, 25, 25, 25, 25, 100, 100],
+meta_data_1 = {'Max': [100, 40, 10, 50, 20, 30, 20, 70, 100, 100, 25, 25, 25, 25, 100, 100],
              'Weightage': [4, 9.6, 2.4, 12, 3.4, 5.2, 3.4, 12, 12, 40, 15, 15, 15, 15, 60, 100.00]}
-meta_frame = pd.DataFrame(meta_data, columns=['Max', 'Weightage'], index=list(result.columns.values)[3:])
+meta_data_2 = {'Max': [4],
+               'Weightage': [1]}
+meta_frame_1 = pd.DataFrame(meta_data_1, columns=['Max', 'Weightage'], index=list(result.columns.values)[3:])
+meta_frame_2 = pd.DataFrame(meta_data_2, columns=['Max', 'Weightage'], index=[list(result.columns.values)[1]])
+meta_frame = pd.concat([meta_frame_1, meta_frame_2], axis=0)
 
 
 # figure out outlier
@@ -101,9 +107,12 @@ outliers_ca4_index = [i for i in range(len(outliers_bool_ca4)) if outliers_bool_
 outliers_bool_final = mad_based_outlier(result.ix[:, 'Exam Total'])
 outliers_final_index = [i for i in range(len(outliers_bool_final)) if outliers_bool_final[i]==True]
 
+# classification problem
+# result,_ = encode_final_score(result, 'Exam Q1', replace=True)
+
 # split input and output
-x = result.ix[:, ['Factor1', 'Factor2', 'CA1']]
-y = result.ix[:, 'Final Total']
+x = result.ix[:, ['Factor1', 'Factor2', 'CA1', 'CA2-1', 'CA2-2']]
+y = result.ix[:, 'Exam Total']
 
 # convert categorical data to labels then convert labels to binary variables(one-hot encoding) to use regression
 
@@ -117,66 +126,29 @@ y = result.ix[:, 'Final Total']
 
 _x,_,_ = one_hot_dataframe(x, ['Factor1', 'Factor2'], replace=True)
 # scaled_features = ['CA1', 'CA2 Total', 'CA3 Total', 'CA4']
-scaled_features = ['CA1']
+scaled_features = ['Factor1', 'CA1', 'CA2-1', 'CA2-2']
+# poly_features = ['CA1', 'CA2 Total', 'CA3 Total', 'CA4']
+poly_features = scaled_features
 
-
-def candidate_families():
-    candidates = []
-
-    # Random Forest Regressor
-    rfr = {'name': 'Random Forest Regressor',
-           'estimator': RandomForestRegressor(n_jobs=-1, max_features='sqrt', n_estimators=50)}
-    rfr_tuned_parameters = {'n_estimators': [300, 500, 800],
-              #'max_depth': [5, 8, 15, 25, 30, None],
-              #'min_samples_split': [1, 2, 5, 10, 15, 100],
-              #'min_sample_leaf': [1, 2, 5, 10],
-              'max_features': ['log2', 'sqrt', None]}
-    candidates.append([rfr['name'], rfr, rfr_tuned_parameters])
-
-    # Support vector regressor
-    svr = {'name': 'support vector regression', 'estimator': SVR()}
-    svr_tuned_parameters = {'C': [0.001, 0.01, 0.1, 1.10, 100, 1000, 10000], 'kernel': ['linear', 'rbf']}
-    candidates.append([svr['name'], svr, svr_tuned_parameters])
-
-    # Ridge regressor
-    rir = {'name': 'Ridge regression', 'estimator': Ridge()}
-    rir_tuned_parameters = {'alpha': [0.01, 0.1, 1.0, 10, 100], 'fit_intercept': [True, False], 'normalize': [True, False]}
-    candidates.append([rir['name'], rir, rir_tuned_parameters])
-
-    # Extra tree regressor
-    etr = {'name': 'Extra tree regression', 'estimator': ExtraTreesRegressor(n_jobs=-1)}
-    etr_tuned_parameters = {'n_estimators': [300, 500, 800],
-                            'max_features': ['log2', 'sqrt', None]}
-    candidates.append([etr['name'], etr, etr_tuned_parameters])
-
-    # Lasso
-    lasso = {'name': 'Lasso', 'estimator': Lasso()}
-    lasso_tuned_parameters = {'alpha': [0.1, 1.0, 10],
-                              'normalize': [True, False]}
-    candidates.append([lasso['name'], lasso, lasso_tuned_parameters])
-
-    # Elastic Net
-    # enet = {'name': 'Elastic Net', 'estimator': ElasticNet(l1_ratio=0)}
-    # enet_tuned_parameters = {'alpha': [0.1, 1.0, 10, 100],
-    #                          'normalize': [True, False]}
-    # candidates.append([enet['name'], enet, enet_tuned_parameters])
-
-    return candidates
-
-best_model = best_model(candidate_families(), scaling_feature(_x, meta_frame, *scaled_features), y)
-print(best_model)
+processed_df = add_polynomial_features(scaling_feature(_x, meta_frame, *scaled_features), *poly_features, degree=3)
+# processed_df = scaling_feature(_x, meta_frame, *scaled_features)
 
 # cv = ShuffleSplit(n_splits=10, test_size=0.2, random_state=0)
-# for model in candidate_families():
-#     estimator = best_config(model[1], model[2], scaling_feature(_x, meta_frame, *scaled_features), y)
-#
-#     plot_learning_curve(estimator[2], "Learning Curve", scaling_feature(_x, meta_frame, *scaled_features), y)
-#
-#     print(cv_score_gen(estimator[2], scaling_feature(_x, meta_frame, *scaled_features), y, 4))
+for model in regression_families():
+    estimator = best_config(model[1], model[2], processed_df, y)
+
+    plot_learning_curve(estimator[2], "Learning Curve", processed_df, y)
+
+    print(cv_score_gen(estimator[2], processed_df, y, 3))
 
 
 plt.show()
-#print(cv_score_gen(best_model, _x, y, 4))
+
+# best_model = best_model(classification_families(), processed_df, y)
+
+print(best_model)
+
+
 
 
 # TODO predict final results based on CA1 scores, CA2 scores,... according to time

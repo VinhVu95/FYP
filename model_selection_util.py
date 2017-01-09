@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold, cross_val_score, GridSearchCV
 from sklearn.model_selection import learning_curve
 
+
 # cross-validation score generator
 # return list of scores for every fold
 def cv_score_gen(model, input, output, nfolds):
@@ -34,10 +35,11 @@ def best_config(model, parameters, train_instances, judgements):
     print(model['estimator'])
     # print(train_instances)
     clf = GridSearchCV(estimator=model['estimator'], param_grid=parameters,
-                       cv=8, verbose=4)
+                       cv=5, verbose=4, scoring='r2')
     clf.fit(train_instances, judgements)
     best_estimator = clf.best_estimator_
     print('Best hyper parameters: ' + str(clf.best_params_))
+    print('Best score of this configuration: ' + str(clf.best_score_))
 
     return [str(clf.best_params_), clf.best_score_,
             best_estimator]
@@ -55,13 +57,14 @@ def best_model(classifier_families, train_instances, judgements):
                                        judgements))
 
     for name, quality, classifier in classifiers:
-        print('Considering classifier... ' + name)
-        if (quality > best_quality):
+        print('Considering classifier... ' + name + ' ' + str(quality))
+        if quality > best_quality:
             best_quality = quality
             best_classifier = [name, classifier]
 
     print('Best classifier... ' + best_classifier[0] + ' best quality ' + str(best_quality))
     return best_classifier[1]
+
 
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
                         n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):

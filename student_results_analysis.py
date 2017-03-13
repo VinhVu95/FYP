@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+from sklearn.tree import DecisionTreeRegressor,export_graphviz
 # import model_selection_util as ms
 # import feature_transformer as ft
 
@@ -9,8 +11,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 
 from model_selection_util import best_config,best_model,cv_score_gen,plot_learning_curve
-from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features
-from model_generation import regression_families, classification_families
+from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features, \
+                                remove_low_variance_features, feature_importance, extract_test_set
+from model_generation import regression_families, classification_families, visualize_tree
 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.model_selection import ShuffleSplit
@@ -88,7 +91,7 @@ def detect_outliers(x):
 
     kwargs = dict(y=0.95, x=0.05, ha='left', va='top')
     axes[0].set_title('Percentile-based Outliers', **kwargs)
-    axes[1].set_title('MAD-based Outliers', **kwargs)
+    axes[1].set_title('Modified z score-based Outliers', **kwargs)
     fig.suptitle('Comparing Outlier Tests with n={}'.format(len(x)), size=14)
 
 # find outliers for each assignment (store the index of the rows)
@@ -107,46 +110,54 @@ outliers_ca4_index = [i for i in range(len(outliers_bool_ca4)) if outliers_bool_
 outliers_bool_final = mad_based_outlier(result.ix[:, 'Exam Total'])
 outliers_final_index = [i for i in range(len(outliers_bool_final)) if outliers_bool_final[i]==True]
 
-# classification problem
-# result,_ = encode_final_score(result, 'Exam Q1', replace=True)
+detect_outliers(result.ix[:, 'CA4'])
+plt.show()
 
 # split input and output
-x = result.ix[:, ['Factor1', 'Factor2', 'CA1', 'CA2-1', 'CA2-2']]
-y = result.ix[:, 'Exam Total']
+x = result.ix[:, ['Factor1', 'Factor2', 'CA1', 'CA2-1', 'CA2-2', 'CA3-1', 'CA3-2', 'CA3-3', 'CA4']]
+y = result.ix[:, 'Exam Total'] # multi-variate problem, only Linear, Lasso, Ridge and random forest support
+
 
 # convert categorical data to labels then convert labels to binary variables(one-hot encoding) to use regression
-
-# lbl_enc = LabelEncoder()
-# lbl_enc.fit(x['Factor1'])
-# x_year = lbl_enc.transform(x['Factor1'])
-# lbl_enc.fit(x['Factor2'])
-# x_nat = lbl_enc.transform(x['Factor2'])
-# ohe = OneHotEncoder()
-# ohe.fit()
-
 _x,_,_ = one_hot_dataframe(x, ['Factor1', 'Factor2'], replace=True)
 # scaled_features = ['CA1', 'CA2 Total', 'CA3 Total', 'CA4']
-scaled_features = ['Factor1', 'CA1', 'CA2-1', 'CA2-2']
+scaled_features = ['Factor1', 'CA1', 'CA2-1', 'CA2-2', 'CA3-1', 'CA3-2', 'CA3-3', 'CA4'] # cannot scale Factor2
 # poly_features = ['CA1', 'CA2 Total', 'CA3 Total', 'CA4']
 poly_features = scaled_features
 
-processed_df = add_polynomial_features(scaling_feature(_x, meta_frame, *scaled_features), *poly_features, degree=3)
+# processed_df = add_polynomial_features(scaling_feature(_x, meta_frame, *scaled_features), *poly_features, degree=3)
+processed_df = scaling_feature(_x, meta_frame, *scaled_features)
+dt = best_config({'name': 'Decision Tree Regressor', 'estimator': DecisionTreeRegressor()},
+                 {'min_samples_split': np.arange(2, 10), 'min_samples_leaf': np.arange(2, 10), 'max_depth': np.arange(3, 10)}, processed_df, y)
+print(cv_score_gen(dt[2], processed_df, y, 3))
+visualize_tree(dt[2], list(processed_df.columns.values))
+
+#feature_importance(processed_df, y, transform=False)
+
+# test_input, test_output = extract_test_set(processed_df, y, [17, 38, 34, 45, 10, 83])
 # processed_df = scaling_feature(_x, meta_frame, *scaled_features)
 
-# cv = ShuffleSplit(n_splits=10, test_size=0.2, random_state=0)
-for model in regression_families():
-    estimator = best_config(model[1], model[2], processed_df, y)
+cv = ShuffleSplit(n_splits=10, test_size=0.2, random_state=0)
+# for model in regression_families():
+#     estimator = best_config(model[1], model[2], processed_df, y)
+#
+#     plot_learning_curve(estimator[2], "Learning Curve", processed_df, y)
+#
+#     cv_score_gen(estimator[2], processed_df, y, 4)
+    # estimator[2].fit(processed_df, y)
+    # print("R2 score: %0.3f" % estimator[2].score(test_input, test_output))
+    # print("                  predicted value\ttrue value ")
+    # for index, row in test_input.iterrows():
+    #     print("student%3d\t\t%0.3f\t\t%0.3f" % (index + 1, estimator[2].predict(row), test_output.ix[index]))
+    #
+    #plt.show()
 
-    plot_learning_curve(estimator[2], "Learning Curve", processed_df, y)
-
-    print(cv_score_gen(estimator[2], processed_df, y, 3))
 
 
-plt.show()
 
 # best_model = best_model(classification_families(), processed_df, y)
 
-print(best_model)
+# print(best_model)
 
 
 

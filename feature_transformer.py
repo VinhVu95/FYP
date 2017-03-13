@@ -1,6 +1,11 @@
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.preprocessing import PolynomialFeatures
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.ensemble import ExtraTreesRegressor
+from sklearn.feature_selection import SelectFromModel
+
 
 def one_hot_dataframe(data,cols,replace=False):
     """
@@ -96,4 +101,69 @@ def add_polynomial_features(input_df, *poly_features, degree=2):
 
     return pd.concat([non_poly, output_df], axis=1)
 
+
+def remove_low_variance_features(input_df, thres=0):
+    sel = VarianceThreshold(threshold=thres)
+    sel.fit(input_df)
+    index = np.where(sel.variances_ > thres)[0]
+    return input_df.ix[:, index]
+
+
+def feature_importance(x, y, transform=False, th=None):
+    """ select the most relevant features to fit into model
+
+    Args:
+        x: input features
+        y: output to predict by the model
+        transfrom: reduce x to the selected features
+        threshold: The threshold value to use for feature selection. Features whose importance is greater or
+                   equal are kept while the others are discarded. If “median” (resp. “mean”), then the
+                   threshold value is the median (resp. the mean) of the feature importances. A scaling
+                   factor (e.g., “1.25*mean”) may also be used. If None and if the estimator has a parameter
+                   penalty set to l1, either explicitly or implicitly (e.g, Lasso), the threshold used is 1e-5.
+                   Otherwise, “mean” is used by default.
+    Returns:
+        Array of feature importance using ExtraTreeClassifier
+
+    """
+    clf = ExtraTreesRegressor()
+    clf = clf.fit(x, y)
+    if transform == True:
+        model = SelectFromModel(clf, threshold=th, prefit=True)
+        x = model.transform(x)
+    importances = clf.feature_importances_
+    print("Feature ranking:")
+    indices = np.argsort(importances)[::-1]
+    headers = list(x.columns.values)
+    for f in range(x.shape[1]):
+        print("%d. feature %s (%f)" % (f + 1, headers[f], importances[indices[f]]))
+
+    return importances
+
+
+def extract_test_set(input, output, *extracted_row_index):
+    """
+
+    Args:
+        input: data frame to extract test input attributes
+        output: serie to extract test output attribute
+        *extracted_row_index: list of index assigned as test object in original datasets
+
+    Returns: test_set_input: test input data frame
+             test_set_out_put: test output serie
+
+    """
+    test_set_input = input.ix[extracted_row_index]
+    test_set_output = output.ix[extracted_row_index]
+    input.drop(input.index[extracted_row_index], inplace=True)
+    input.reset_index(inplace=True)
+    input.drop('index', axis=1, inplace=True)
+    output.drop(output.index[extracted_row_index], inplace=True)
+    if isinstance(output, pd.DataFrame):
+        output.reset_index(inplace=True)
+        input.drop('index', axis=1, inplace=True)
+    else:
+        output.reset_index(drop=True, inplace=True)
+
+    return test_set_input, test_set_output
 

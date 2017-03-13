@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 from sklearn.model_selection import KFold, cross_val_score, GridSearchCV
 from sklearn.model_selection import learning_curve
@@ -9,8 +10,30 @@ from sklearn.model_selection import learning_curve
 # return list of scores for every fold
 def cv_score_gen(model, input, output, nfolds):
     kfold = KFold(n_splits=nfolds, shuffle=True)
-    return [model.fit(input.ix[train, :], output[train]).score(input.ix[test, :], output[test])
-            for train, test in kfold.split(input)]
+    max_score = -100000000
+    test_set = []
+    train_set = []
+    if isinstance(output, pd.DataFrame):
+        for train, test in kfold.split(input):
+            score = model.fit(input.ix[train, :], output.ix[train, :]).\
+                score(input.ix[test, :], output.ix[test, :])
+            if score > max_score:
+                max_score = score
+        print("max score of multi-output: %0.3f" %max_score)
+    else:
+        for train, test in kfold.split(input):
+            score = model.fit(input.ix[train, :], output[train]).score(input.ix[test, :], output[test])
+            if score > max_score:
+                max_score = score
+                test_set = test
+                train_set = train
+        print("max score: %0.3f" % max_score)
+        print("                  predicted value\ttrue value ")
+        model.fit(input.ix[train_set, :], output[train_set])
+        for i in test_set:
+            print("student%3d\t\t%0.3f\t\t%0.3f" %(i+1, model.predict(input.ix[i]), output.ix[i]))
+
+    return max_score, test_set
 
 # TODO Feature selection
 

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import utils
 
 from sklearn.model_selection import KFold, cross_val_score, GridSearchCV
 from sklearn.model_selection import learning_curve
@@ -8,7 +9,7 @@ from sklearn.model_selection import learning_curve
 
 # cross-validation score generator
 # return list of scores for every fold
-def cv_score_gen(model, input, output, nfolds):
+def cv_score_gen(model, model_name, input, output, nfolds):
     kfold = KFold(n_splits=nfolds, shuffle=True)
     max_score = -100000000
     test_set = []
@@ -19,6 +20,9 @@ def cv_score_gen(model, input, output, nfolds):
                 score(input.ix[test, :], output.ix[test, :])
             if score > max_score:
                 max_score = score
+                test_set = test
+                train_set = train
+        model.fit(input.ix[train_set, :], output[train_set])
         print("max score of multi-output: %0.3f" %max_score)
     else:
         for train, test in kfold.split(input):
@@ -30,9 +34,14 @@ def cv_score_gen(model, input, output, nfolds):
         print("max score: %0.3f" % max_score)
         print("                  predicted value\ttrue value ")
         model.fit(input.ix[train_set, :], output[train_set])
+        predict_result = list()
         for i in test_set:
-            print("student%3d\t\t%0.3f\t\t%0.3f" %(i+1, model.predict(input.ix[i]), output.ix[i]))
-
+            p = model.predict(input.ix[i])[0]
+            predict_result.append(p)
+            print("student%3d\t\t%0.3f\t\t%0.3f" % (i+1, p, output.ix[i]))
+        table = zip(test_set, predict_result, output.tolist())
+    "import to csv file"
+    utils.export_prediction_result_to_csv(model_name, table)
     return max_score, test_set
 
 # TODO Feature selection
@@ -58,7 +67,7 @@ def best_config(model, parameters, train_instances, judgements):
     print(model['estimator'])
     # print(train_instances)
     clf = GridSearchCV(estimator=model['estimator'], param_grid=parameters,
-                       cv=5, verbose=4, scoring='r2')
+                       cv=KFold(n_splits=5, shuffle=True), verbose=4, scoring='r2')
     clf.fit(train_instances, judgements)
     best_estimator = clf.best_estimator_
     print('Best hyper parameters: ' + str(clf.best_params_))

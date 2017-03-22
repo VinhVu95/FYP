@@ -14,9 +14,9 @@ def regression_families():
     candidates = []
 
     # Support vector regressor
-    # svr = {'name': 'support vector regression', 'estimator': SVR()}
-    # svr_tuned_parameters = {'C': [0.001, 0.01, 0.1, 1.10, 100, 1000, 10000], 'kernel': ['linear', 'rbf', 'poly', 'sigmoid']}
-    # candidates.append([svr['name'], svr, svr_tuned_parameters])
+    svr = {'name': 'support vector regression', 'estimator': SVR()}
+    svr_tuned_parameters = {'C': [0.001, 0.01, 0.1, 1.10, 100, 1000, 10000], 'kernel': ['linear', 'rbf', 'poly', 'sigmoid']}
+    candidates.append([svr['name'], svr, svr_tuned_parameters])
 
     # Random Forest Regressor
     rfr = {'name': 'Random Forest Regressor',
@@ -25,6 +25,7 @@ def regression_families():
                             # "criterion": ["gini", "entropy"],
                             # 'min_samples_split': np.arange(2, 10),
                             # 'min_samples_leaf': np.arange(2, 10),
+                            #'oob_score': [True, False],
                             'max_features': ['log2', 'sqrt', None]}
     candidates.append([rfr['name'], rfr, rfr_tuned_parameters])
 
@@ -53,11 +54,11 @@ def regression_families():
     candidates.append([lasso['name'], lasso, lasso_tuned_parameters])
 
     # Neural network
-    # nn = {'name': 'Neural Network Regressor', 'estimator': MLPRegressor()}
-    # nn_tuned_parameters = {'activation': ['identity', 'logistic', 'tanh', 'relu'],
-    #                        'solver': ['lbfgs', 'sgd', 'adam'],
-    #                        'alpha': [0.001, 0.01, 0.1, 1.0, 10, 100]}
-    # candidates.append([nn['name'], nn, nn_tuned_parameters])
+    nn = {'name': 'Neural Network Regressor', 'estimator': MLPRegressor()}
+    nn_tuned_parameters = {'activation': ['identity', 'logistic', 'tanh', 'relu'],
+                           'solver': ['lbfgs', 'sgd', 'adam'],
+                           'alpha': [0.001, 0.01, 0.1, 1.0, 10, 100]}
+    candidates.append([nn['name'], nn, nn_tuned_parameters])
 
     # Elastic Net
     # enet = {'name': 'Elastic Net', 'estimator': ElasticNet(l1_ratio=0)}
@@ -76,9 +77,9 @@ def regression_families():
     # candidates.append([lr['name'], lr, lr_tuned_parameters])
 
     # K nearest neighbor regression
-    # knn = {'name': 'K Nearest Neighbors', 'estimator': KNeighborsRegressor()}
-    # knn_tuned_parameters = {'weights': ['uniform', 'distance']}
-    # candidates.append([knn['name'], knn, knn_tuned_parameters])
+    knn = {'name': 'K Nearest Neighbors', 'estimator': KNeighborsRegressor()}
+    knn_tuned_parameters = {'weights': ['uniform', 'distance']}
+    candidates.append([knn['name'], knn, knn_tuned_parameters])
 
     return candidates
 

@@ -126,17 +126,17 @@ def feature_importance(x, y, transform=False, th=None):
         Array of feature importance using ExtraTreeClassifier
 
     """
-    clf = ExtraTreesRegressor()
+    clf = ExtraTreesRegressor(min_samples_split=3, min_samples_leaf=3, max_depth=5)
     clf = clf.fit(x, y)
     if transform == True:
         model = SelectFromModel(clf, threshold=th, prefit=True)
-        x = model.transform(x)
+        model.transform(x)
     importances = clf.feature_importances_
     print("Feature ranking:")
     indices = np.argsort(importances)[::-1]
     headers = list(x.columns.values)
     for f in range(x.shape[1]):
-        print("%d. feature %s (%f)" % (f + 1, headers[f], importances[indices[f]]))
+        print("%d. feature %s (%f)" % (f + 1, headers[indices[f]], importances[indices[f]]))
 
     return importances
 

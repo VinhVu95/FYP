@@ -62,3 +62,5 @@ def detect_outliers(x):
     axes[0].set_title('Percentile-based Outliers', **kwargs)
     axes[1].set_title('Modified z score-based Outliers', **kwargs)
     fig.suptitle('Comparing Outlier Tests with n={}'.format(len(x)), size=14)
+
+    return None

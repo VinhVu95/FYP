@@ -16,6 +16,7 @@ from model_generation import regression_families, classification_families, visua
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.model_selection import ShuffleSplit
 
+"""Pre-process raw data"""
 data = pd.read_csv("Student Results.csv")
 # drop empty row from table
 result = data.dropna()
@@ -111,7 +112,7 @@ def simulation(repeat, models, plot_learn_curve=False):
                 plot[index] = False
                 plt.show()
 
-            max_score,_ = cv_score_gen(estimator[2], model[0],processed_df, y, 4)
+            max_score,_ = cv_score_gen(estimator[2], model[0], processed_df, y, 4)
             max_prediction_variance.append(max_score)
             cv_score.append(estimator[1])
             "if use test set to evaluate prediction variability"

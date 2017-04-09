@@ -1,5 +1,5 @@
 import csv
-import math, cPickle
+import math
 from sklearn.externals import joblib
 
 
@@ -19,7 +19,7 @@ def export_prediction_result_to_csv(model_name, table):
         writer.writeheader()
 
         for num, pred, tv in table:
-            writer.writerow({'student number': num, 'predicted value': round(pred, 2), 'true value': round(tv, 2)})
+            writer.writerow({'student number': num+1, 'predicted value': round(pred, 2), 'true value': round(tv, 2)})
 
     return None
 
@@ -36,7 +36,7 @@ def save_model(model_name, model):
     """
     try:
         with open('Results/' + model_name + '.pkl', 'wb') as fid:
-            cPickle.dump(model, fid)
+            joblib.dump(model, fid)
     except:
         exit("Could not save trained model to hard disk")
 

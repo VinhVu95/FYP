@@ -35,13 +35,17 @@ def cv_score_gen(model, model_name, input, output, nfolds):
         print("                  predicted value\ttrue value ")
         model.fit(input.ix[train_set, :], output[train_set])
         predict_result = list()
+        actual_result = list()
         for i in test_set:
             p = model.predict(input.ix[i])[0]
+            a = output.ix[i]
             predict_result.append(p)
-            print("student%3d\t\t%0.3f\t\t%0.3f" % (i+1, p, output.ix[i]))
-        table = zip(test_set, predict_result, output.tolist())
+            actual_result.append(a)
+            print("student%3d\t\t%0.3f\t\t%0.3f" % (i+1, p, a))
+
     "import to csv file"
-    utils.export_prediction_result_to_csv(model_name, table)
+    utils.export_prediction_result_to_csv(model_name, zip(test_set, predict_result, actual_result))
+
     return max_score, test_set
 
 # TODO Feature selection
@@ -72,6 +76,9 @@ def best_config(model, parameters, train_instances, judgements):
     best_estimator = clf.best_estimator_
     print('Best hyper parameters: ' + str(clf.best_params_))
     print('Best score of this configuration: ' + str(clf.best_score_))
+
+    "save trained model to pickle file, however needed to re-trained to evaluate r2 score"
+    utils.save_model(model['name'], best_estimator)
 
     return [str(clf.best_params_), clf.best_score_,
             best_estimator]

@@ -130,7 +130,7 @@ def feature_importance(x, y, transform=False, th=None):
     clf = clf.fit(x, y)
     if transform == True:
         model = SelectFromModel(clf, threshold=th, prefit=True)
-        model.transform(x)
+        x_transform = model.transform(x)
     importances = clf.feature_importances_
     print("Feature ranking:")
     indices = np.argsort(importances)[::-1]
@@ -138,7 +138,7 @@ def feature_importance(x, y, transform=False, th=None):
     for f in range(x.shape[1]):
         print("%d. feature %s (%f)" % (f + 1, headers[indices[f]], importances[indices[f]]))
 
-    return importances
+    return importances, x_transform
 
 
 def extract_test_set(input, output, *extracted_row_index):

@@ -21,7 +21,7 @@ data = pd.read_csv("Student Results.csv")
 # drop empty row from table
 result = data.dropna()
 # drop student did not attend final
-result = result[result['Final Total'] != 'ABS']
+result = result[result['F'] != 'ABS']
 # after deleting row with student absent in final, the index not shift back -> reindex, and then drop the column 'index'
 result = result.reset_index().drop('index', axis=1)
 
@@ -42,59 +42,99 @@ meta_frame = pd.concat([meta_frame_1, meta_frame_2], axis=0)
 
 """Detect outlier"""
 # find outliers for each assignment (store the index of the rows)
-outliers_bool_ca1 = mad_based_outlier(result.ix[:, 'CA1'])
+outliers_bool_ca1 = mad_based_outlier(result.ix[:, 'C1'])
 outliers_ca1_index = [i for i in range(len(outliers_bool_ca1)) if outliers_bool_ca1[i]==True]
 
-outliers_bool_ca2 = mad_based_outlier(result.ix[:, 'CA2 Total'])
+outliers_bool_ca2 = mad_based_outlier(result.ix[:, 'C2 Total'])
 outliers_ca2_index = [i for i in range(len(outliers_bool_ca2)) if outliers_bool_ca2[i]==True]
 
-outliers_bool_ca3 = mad_based_outlier(result.ix[:, 'CA3 Total'])
+outliers_bool_ca3 = mad_based_outlier(result.ix[:, 'C3 Total'])
 outliers_ca3_index = [i for i in range(len(outliers_bool_ca3)) if outliers_bool_ca3[i]==True]
 
-outliers_bool_ca4 = mad_based_outlier(result.ix[:, 'CA4'])
+outliers_bool_ca4 = mad_based_outlier(result.ix[:, 'C4'])
 outliers_ca4_index = [i for i in range(len(outliers_bool_ca4)) if outliers_bool_ca4[i]==True]
 
-outliers_bool_final = mad_based_outlier(result.ix[:, 'Exam Total'])
+outliers_bool_final = mad_based_outlier(result.ix[:, 'E'])
 outliers_final_index = [i for i in range(len(outliers_bool_final)) if outliers_bool_final[i]==True]
 
-# detect_outliers(result.ix[:, 'CA4'])
-# plt.show()
+x = result.ix[:, ['Background1', 'Background2', 'C1', 'C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3', 'C4']]
+print("input attributes :" + str(x.columns.tolist()))
+print("output target: E")
 
-# split input and output
-x = result.ix[:, ['CA2-1', 'CA2-2', 'CA3-1', 'CA3-2', 'CA3-3']]
-y = result.ix[:, 'Exam Total'] # multi-variate problem, only Linear, Lasso, Ridge and random forest support
+# TODO predict final results based on CA1 scores, CA2 scores,... according to time
+def predict_final_scores_chronologically(*features):
+    return None
+
+"""
+    Detect outliers for each CA
+"""
+def detect_outlier_students():
+    detect_outliers(result.ix[:, 'C1'])
+    detect_outliers(result.ix[:, 'C2 Total'])
+    detect_outliers(result.ix[:, 'C3 Total'])
+    detect_outliers(result.ix[:, 'C4'])
+    plt.show()
+    return None
 
 
-"convert categorical data to labels then convert labels to binary variables(one-hot encoding) to use regression"
-# _x,_,_ = one_hot_dataframe(x, ['Factor1', 'Factor2'], replace=True)
-# scaled_features = ['CA1', 'CA2 Total', 'CA3 Total', 'CA4']
-scaled_features = ['CA2-1', 'CA2-2', 'CA3-1', 'CA3-2', 'CA3-3'] # cannot scale Factor2
-# poly_features = ['CA1', 'CA2 Total', 'CA3 Total', 'CA4']
-poly_features = scaled_features
+"""
+    Prepare data for decision tree visualization and calculation of feature ranking
+"""
+def prepare():
+    x = result.ix[:, ['Background1', 'Background2', 'C1', 'C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3', 'C4']]
+    y = result.ix[:, 'E']
+    "convert categorical data to labels then convert labels to binary variables(one-hot encoding) to use regression"
+    _x, _, _ = one_hot_dataframe(x, ['Background1', 'Background2'], replace=True)
+    scaled_features = ['Background1', 'C1', 'C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3', 'C4']
+    prepared_df = scaling_feature(_x, meta_frame, *scaled_features)
+    return prepared_df, y
 
-#processed_df = add_polynomial_features(scaling_feature(x, meta_frame, *scaled_features), *poly_features, degree=3)
-processed_df = scaling_feature(x, meta_frame, *scaled_features)
-"feature importance"
-feature_importance(processed_df, y, transform=False)
-# test_input, test_output = extract_test_set(processed_df, y, [17, 38, 34, 45, 10, 83])
-# processed_df = scaling_feature(_x, meta_frame, *scaled_features)
 
 """
     Visualize decision tree
 """
 def visualize():
+    prepared_df, y = prepare()
     dt = best_config({'name': 'Decision Tree Regressor', 'estimator': DecisionTreeRegressor()},
-                     {'min_samples_split': np.arange(2, 10), 'min_samples_leaf': np.arange(2, 10),
-                      'max_depth': np.arange(3, 10)}, processed_df, y)
-    print(cv_score_gen(dt[2], processed_df, y, 3))
-    visualize_tree(dt[2], list(processed_df.columns.values))
+                     {'min_samples_split': [3], 'min_samples_leaf': [3],
+                      'max_depth': [5]}, prepared_df, y)
+    #print(cv_score_gen(dt[2], processed_df, y, 3))
+    visualize_tree(dt[2], list(prepared_df.columns.values))
+    return None
+
+"""
+    Feature importance
+"""
+def calculate_feature_ranking():
+    prepared_df, y = prepare()
+    imp, transformed_processed = feature_importance(prepared_df, y, transform=True)
+    return None
+
 
 """
     Simulation function run the learning process n times and take average
     of cv score and prediction variance
 """
-def simulation(repeat, models, plot_learn_curve=False):
-    cv = ShuffleSplit(n_splits=10, test_size=0.2, random_state=0)
+def simulation(plot_learn_curve=False, add_poly=False, repeat=1):
+    models = regression_families()
+    x = result.ix[:, ['C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3']]
+    y = result.ix[:, 'E']  # multi-variate problem, only Linear, Lasso, Ridge and random forest support
+
+    "convert categorical data to labels then convert labels to binary variables(one-hot encoding) to use regression"
+    # _x,_,_ = one_hot_dataframe(x, ['Background1', 'Background2'], replace=True)
+    scaled_features = ['C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3']  # cannot scale Factor2
+    poly_features = scaled_features
+
+    processed_df = scaling_feature(x, meta_frame, *scaled_features)
+    if add_poly==True:
+        kept_model_index = [0, 2, 3]
+        processed_df = add_polynomial_features(scaling_feature(x, meta_frame, *scaled_features), *poly_features, degree=3)
+        models = [i for j, i in enumerate(models) if j in kept_model_index]
+
+    # test_input, test_output = extract_test_set(processed_df, y, [17, 38, 34, 45, 10, 83])
+    # processed_df = scaling_feature(_x, meta_frame, *scaled_features)
+
+    cv = ShuffleSplit(n_splits=7, test_size=0.2, random_state=0)
     pred_var = []
     val_score = []
     plot = [False] * len(models)
@@ -132,16 +172,25 @@ def simulation(repeat, models, plot_learn_curve=False):
     print('average cv score:' + str(np_val_score.mean(0)))
     print('average prediction variability:' + str(np_max_prediction_variance.mean(0)))
 
-repeat = 1
-rf = regression_families()
-simulation(repeat, rf)
-
-
-# best_model = best_model(classification_families(), processed_df, y)
-
-# print(best_model)
-
-# TODO predict final results based on CA1 scores, CA2 scores,... according to time
-def predict_final_scores_chronologically(*features):
     return None
+
+repeat = 1
+
+'''
+########################################################################################################################
+##--------------------------------------------DEMO STEPS--------------------------------------------------------------##
+########################################################################################################################
+
+'''
+"1. Visualize decision tree to observe most important features"
+# visualize()
+
+"2. Feature importance"
+# calculate_feature_ranking()
+
+"3. Train models and observe learning curve --> Simulation"
+# simulation(plot_learn_curve=True)
+
+"4. Increase polynomial degree for under-fit models"
+# simulation(plot_learn_curve=True,add_poly=True)
 

@@ -7,7 +7,7 @@ from sklearn.tree import DecisionTreeRegressor,export_graphviz
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 
-from outlier_detection import detect_outliers, mad_based_outlier
+from models.outlier_detector import OutlierDetector
 from model_selection_util import best_config,best_model,cv_score_gen,plot_learning_curve
 from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features, \
                                 remove_low_variance_features, feature_importance, extract_test_set
@@ -41,20 +41,21 @@ meta_frame = pd.concat([meta_frame_1, meta_frame_2], axis=0)
 
 
 """Detect outlier"""
+od = OutlierDetector()
 # find outliers for each assignment (store the index of the rows)
-outliers_bool_ca1 = mad_based_outlier(result.ix[:, 'C1'])
+outliers_bool_ca1 = od.mad_based_outlier(result.ix[:, 'C1'])
 outliers_ca1_index = [i for i in range(len(outliers_bool_ca1)) if outliers_bool_ca1[i]==True]
 
-outliers_bool_ca2 = mad_based_outlier(result.ix[:, 'C2 Total'])
+outliers_bool_ca2 = od.mad_based_outlier(result.ix[:, 'C2 Total'])
 outliers_ca2_index = [i for i in range(len(outliers_bool_ca2)) if outliers_bool_ca2[i]==True]
 
-outliers_bool_ca3 = mad_based_outlier(result.ix[:, 'C3 Total'])
+outliers_bool_ca3 = od.mad_based_outlier(result.ix[:, 'C3 Total'])
 outliers_ca3_index = [i for i in range(len(outliers_bool_ca3)) if outliers_bool_ca3[i]==True]
 
-outliers_bool_ca4 = mad_based_outlier(result.ix[:, 'C4'])
+outliers_bool_ca4 = od.mad_based_outlier(result.ix[:, 'C4'])
 outliers_ca4_index = [i for i in range(len(outliers_bool_ca4)) if outliers_bool_ca4[i]==True]
 
-outliers_bool_final = mad_based_outlier(result.ix[:, 'E'])
+outliers_bool_final = od.mad_based_outlier(result.ix[:, 'E'])
 outliers_final_index = [i for i in range(len(outliers_bool_final)) if outliers_bool_final[i]==True]
 
 x = result.ix[:, ['Background1', 'Background2', 'C1', 'C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3', 'C4']]
@@ -69,10 +70,10 @@ def predict_final_scores_chronologically(*features):
     Detect outliers for each CA
 """
 def detect_outlier_students():
-    detect_outliers(result.ix[:, 'C1'])
-    detect_outliers(result.ix[:, 'C2 Total'])
-    detect_outliers(result.ix[:, 'C3 Total'])
-    detect_outliers(result.ix[:, 'C4'])
+    od.detect_outliers(result.ix[:, 'C1'])
+    od.detect_outliers(result.ix[:, 'C2 Total'])
+    od.detect_outliers(result.ix[:, 'C3 Total'])
+    od.detect_outliers(result.ix[:, 'C4'])
     plt.show()
     return None
 

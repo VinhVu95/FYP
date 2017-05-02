@@ -8,9 +8,9 @@ class Regressor(object):
         self.estimator = estimator
         self.tuned_parameter = tuned_parameters
         self.is_regressor = True
-        if isinstance(self.estimator, BaseEstimator):
+        if issubclass(type(self.estimator), BaseEstimator) is False:
             raise RuntimeError("Please use sklearn estimators")
-        if isinstance(self.tuned_parameter, dict):
+        if isinstance(self.tuned_parameter, dict) is False:
             raise RuntimeError("Please use Python dict to store parameters space")
 
     def __repr__(self):
@@ -31,9 +31,9 @@ class Classifier(object):
         self.estimator = estimator
         self.tuned_parameter = tuned_parameters
         self.is_classifier = True
-        if isinstance(self.estimator, BaseEstimator):
+        if issubclass(type(self.estimator), BaseEstimator) is False:
             raise RuntimeError("Please use sklearn estimators")
-        if isinstance(self.tuned_parameter, dict):
+        if isinstance(self.tuned_parameter, dict) is False:
             raise RuntimeError("Please use Python dict to store parameters space")
 
     def __repr__(self):

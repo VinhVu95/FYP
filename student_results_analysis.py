@@ -7,7 +7,8 @@ from sklearn.tree import DecisionTreeRegressor,export_graphviz
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 
-from models.outlier_detector import OutlierDetector
+from classes.outlier_detector import OutlierDetector
+from classes.predictor import Regressor
 from model_selection_util import best_config,best_model,cv_score_gen,plot_learning_curve
 from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features, \
                                 remove_low_variance_features, feature_importance, extract_test_set
@@ -96,9 +97,9 @@ def prepare():
 """
 def visualize():
     prepared_df, y = prepare()
-    dt = best_config({'name': 'Decision Tree Regressor', 'estimator': DecisionTreeRegressor()},
-                     {'min_samples_split': [3], 'min_samples_leaf': [3],
-                      'max_depth': [5]}, prepared_df, y)
+    dt = best_config(Regressor('Decision Tree Regressor', DecisionTreeRegressor(),
+                               {'min_samples_split': [3], 'min_samples_leaf': [3],
+                                'max_depth': [5]}), prepared_df, y)
     #print(cv_score_gen(dt[2], processed_df, y, 3))
     visualize_tree(dt[2], list(prepared_df.columns.values))
     return None
@@ -146,14 +147,14 @@ def simulation(plot_learn_curve=False, add_poly=False, repeat=1):
         max_prediction_variance = list()
         cv_score = list()
         for index, model in enumerate(models):
-            estimator = best_config(model[1], model[2], processed_df, y)
+            estimator = best_config(model, processed_df, y)
 
             if plot[index] == True:
                 plot_learning_curve(estimator[2], "Learning Curve", processed_df, y, cv=cv)
                 plot[index] = False
                 plt.show()
 
-            max_score,_ = cv_score_gen(estimator[2], model[0], processed_df, y, 4)
+            max_score,_ = cv_score_gen(estimator[2], model.name, processed_df, y, 4)
             max_prediction_variance.append(max_score)
             cv_score.append(estimator[1])
             "if use test set to evaluate prediction variability"
@@ -189,9 +190,9 @@ repeat = 1
 "2. Feature importance"
 # calculate_feature_ranking()
 
-"3. Train models and observe learning curve --> Simulation"
+"3. Train classes and observe learning curve --> Simulation"
 # simulation(plot_learn_curve=True)
 
-"4. Increase polynomial degree for under-fit models"
+"4. Increase polynomial degree for under-fit classes"
 # simulation(plot_learn_curve=True,add_poly=True)
 

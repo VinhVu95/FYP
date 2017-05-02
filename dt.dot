@@ -1,7 +1,7 @@
 digraph Tree {
 node [shape=box] ;
 0 [label="C2-1 <= 0.7625\nmse = 339.6276\nsamples = 91\nvalue = 53.9011"] ;
-1 [label="C3-3 <= 0.05\nmse = 212.2999\nsamples = 38\nvalue = 40.4474"] ;
+1 [label="C3-1 <= 0.175\nmse = 212.2999\nsamples = 38\nvalue = 40.4474"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
 2 [label="mse = 18.0\nsamples = 3\nvalue = 3.0"] ;
 1 -> 2 ;
@@ -51,10 +51,10 @@ node [shape=box] ;
 23 -> 24 ;
 25 [label="mse = 20.24\nsamples = 5\nvalue = 79.6"] ;
 23 -> 25 ;
-26 [label="C2-1 <= 0.9375\nmse = 50.9136\nsamples = 9\nvalue = 82.5556"] ;
+26 [label="Background2=A <= 0.5\nmse = 50.9136\nsamples = 9\nvalue = 82.5556"] ;
 12 -> 26 ;
-27 [label="mse = 68.4\nsamples = 5\nvalue = 80.0"] ;
+27 [label="mse = 10.6875\nsamples = 4\nvalue = 85.75"] ;
 26 -> 27 ;
-28 [label="mse = 10.6875\nsamples = 4\nvalue = 85.75"] ;
+28 [label="mse = 68.4\nsamples = 5\nvalue = 80.0"] ;
 26 -> 28 ;
 }

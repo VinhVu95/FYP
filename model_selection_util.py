@@ -53,7 +53,7 @@ def cv_score_gen(model, model_name, input, output, nfolds):
 
 # TODO Grid search for hyper parameter tuning for a model
 # return the best configuration for a model using cross validation and grid search
-def best_config(model, parameters, train_instances, judgements):
+def best_config(model,train_instances, judgements):
     """
     Args:
         model: the model dict object with name of model and actual estimators
@@ -67,10 +67,10 @@ def best_config(model, parameters, train_instances, judgements):
     accuracy, verbose output and 4 jobs running in parallel while tuning the parameters
 
     """
-    print('Grid search for... ' + model['name'])
-    print(model['estimator'])
+    print('Grid search for... ' + model.name)
+    print(model.estimator)
     # print(train_instances)
-    clf = GridSearchCV(estimator=model['estimator'], param_grid=parameters,
+    clf = GridSearchCV(estimator=model.estimator, param_grid=model.tuned_parameter,
                        cv=KFold(n_splits=5, shuffle=True), verbose=4, scoring='r2')
     clf.fit(train_instances, judgements)
     best_estimator = clf.best_estimator_
@@ -78,7 +78,7 @@ def best_config(model, parameters, train_instances, judgements):
     print('Best score of this configuration: ' + str(clf.best_score_))
 
     "save trained model to pickle file, however needed to re-trained to evaluate r2 score"
-    utils.save_model(model['name'], best_estimator)
+    utils.save_model(model.name, best_estimator)
 
     return [str(clf.best_params_), clf.best_score_,
             best_estimator]

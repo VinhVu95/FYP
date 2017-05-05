@@ -13,6 +13,7 @@ from model_selection_util import best_config,best_model,cv_score_gen,plot_learni
 from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features, \
                                 remove_low_variance_features, feature_importance, extract_test_set
 from model_generation import regression_families, classification_families, visualize_tree
+from cluster_analysis import visualise_cluster3d
 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.model_selection import ShuffleSplit
@@ -67,10 +68,11 @@ print("output target: E")
 def predict_final_scores_chronologically(*features):
     return None
 
-"""
-    Detect outliers for each CA
-"""
+
 def detect_outlier_students():
+    """
+        Detect outliers for each CA
+    """
     od.detect_outliers(result.ix[:, 'C1'])
     od.detect_outliers(result.ix[:, 'C2 Total'])
     od.detect_outliers(result.ix[:, 'C3 Total'])
@@ -79,10 +81,10 @@ def detect_outlier_students():
     return None
 
 
-"""
-    Prepare data for decision tree visualization and calculation of feature ranking
-"""
 def prepare():
+    """
+        Prepare data for decision tree visualization and calculation of feature ranking
+    """
     x = result.ix[:, ['Background1', 'Background2', 'C1', 'C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3', 'C4']]
     y = result.ix[:, 'E']
     "convert categorical data to labels then convert labels to binary variables(one-hot encoding) to use regression"
@@ -92,10 +94,10 @@ def prepare():
     return prepared_df, y
 
 
-"""
-    Visualize decision tree
-"""
 def visualize():
+    """
+        Visualize decision tree
+    """
     prepared_df, y = prepare()
     dt = best_config(Regressor('Decision Tree Regressor', DecisionTreeRegressor(),
                                {'min_samples_split': [3], 'min_samples_leaf': [3],
@@ -104,20 +106,30 @@ def visualize():
     visualize_tree(dt[2], list(prepared_df.columns.values))
     return None
 
-"""
-    Feature importance
-"""
+
 def calculate_feature_ranking():
+    """
+        Feature importance
+    """
     prepared_df, y = prepare()
     imp, transformed_processed = feature_importance(prepared_df, y, transform=True)
     return None
 
 
-"""
-    Simulation function run the learning process n times and take average
-    of cv score and prediction variance
-"""
+def cluster():
+    """
+        Visualize clustering(grouping) of student data
+    """
+    prepared_df, y = prepare()
+    num_clusters = [3,8,10]
+    visualise_cluster3d(prepared_df, label=None, use_pca=True, *num_clusters)
+
+
 def simulation(plot_learn_curve=False, add_poly=False, repeat=1):
+    """
+        Simulation function run the learning process n times and take average
+        of cv score and prediction variance
+    """
     models = regression_families()
     x = result.ix[:, ['C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3']]
     y = result.ix[:, 'E']  # multi-variate problem, only Linear, Lasso, Ridge and random forest support

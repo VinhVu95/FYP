@@ -58,7 +58,7 @@ def regression_families():
                             # 'oob_score': [True, False],
                             'max_features': ['sqrt', None]}
     rfr = Regressor('Random Forest Regressor',RandomForestRegressor(n_jobs=-1, max_features='sqrt', n_estimators=50, min_samples_split=8,
-                                              min_samples_leaf=2),rfr_tuned_parameters)
+                                              min_samples_leaf=2), rfr_tuned_parameters)
     candidates.append(rfr)
 
     # Elastic Net

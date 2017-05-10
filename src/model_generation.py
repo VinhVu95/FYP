@@ -1,13 +1,14 @@
-from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor, RandomForestClassifier
-from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier, export_graphviz
-from sklearn.svm import SVR
-from sklearn.linear_model import Ridge,Lasso,ElasticNet,LogisticRegression, LinearRegression
-from sklearn.neural_network import MLPRegressor
+import subprocess
+
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.linear_model import Ridge,Lasso, LogisticRegression, LinearRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
+
 from classes.predictor import Regressor,Classifier
-import subprocess
-import numpy as np
 
 
 def regression_families():

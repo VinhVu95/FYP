@@ -1,15 +1,25 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
-import utils
-
-from sklearn.model_selection import KFold, cross_val_score, GridSearchCV
+from sklearn.model_selection import KFold, GridSearchCV
 from sklearn.model_selection import learning_curve
 
+from process import utils
 
-# cross-validation score generator
-# return list of scores for every fold
+
 def cv_score_gen(model, model_name, input, output, nfolds):
+    """
+    cross-validation score generator
+    Args:
+        model: predictor sklearn object
+        model_name: name of the ML algorithm used
+        input: input data frame
+        output: output target value
+        nfolds: value of k fold in cross validation
+
+    Returns: maximum R2 score of CV scheme
+
+    """
     kfold = KFold(n_splits=nfolds, shuffle=True)
     max_score = -100000000
     test_set = []
@@ -48,11 +58,7 @@ def cv_score_gen(model, model_name, input, output, nfolds):
 
     return max_score, test_set
 
-# TODO Feature selection
 
-
-# TODO Grid search for hyper parameter tuning for a model
-# return the best configuration for a model using cross validation and grid search
 def best_config(model,train_instances, judgements):
     """
     Args:
@@ -84,9 +90,17 @@ def best_config(model,train_instances, judgements):
             best_estimator]
 
 
-# TODO Choosing estimators
-# return best model from set of model families given training data using cross-validation
 def best_model(classifier_families, train_instances, judgements):
+    """
+    Choosing estimators in a model family
+    Args:
+        classifier_families: set of estimator
+        train_instances: input set
+        judgements: output target value
+
+    Returns: best estimator (after trained)
+
+    """
     best_quality = 0.0
     best_classifier = None
     classifiers = []

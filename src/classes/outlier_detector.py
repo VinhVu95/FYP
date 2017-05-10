@@ -56,6 +56,15 @@ class OutlierDetector:
 
     @staticmethod
     def detect_outliers(x):
+        """
+
+        Args:
+            x:  numpy array or Panda Serie, data points
+
+        Returns: graphical presentation compare between percentile ranking and modified z score
+        red spot denote outlier points detected
+
+        """
         fig, axes = plt.subplots(nrows=2)
         for ax, func in zip(axes, [OutlierDetector.percentile_based_outlier, OutlierDetector.mad_based_outlier]):
             sns.distplot(x, ax=ax, rug=True, hist=False)

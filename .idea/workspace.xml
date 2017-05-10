@@ -2,11 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40cc1c10-fee5-4297-be95-26ce83be1497" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_analysis.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Decision Tree Regressor.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/K Nearest Neighbors.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Lasso.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Linear Regression.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Neural Network Regressor.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Random Forest Regressor.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Ridge regression.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/support vector regression.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/K Nearest Neighbors.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Lasso.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Linear Regression.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Neural Network Regressor.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Random Forest Regressor.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/Ridge regression.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Results/support vector regression.csv" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/classes/outlier_detector.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/classes/predictor.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/.ipynb_checkpoints/Untitled1-checkpoint.ipynb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/presidental_prediction.ipynb" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_analysis.py" afterPath="$PROJECT_DIR$/src/cluster_analysis.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/dt.dot" afterPath="$PROJECT_DIR$/src/dt.dot" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/dt.png" afterPath="$PROJECT_DIR$/src/dt.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/feature_transformer.py" afterPath="$PROJECT_DIR$/src/process/feature_transformer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/model_generation.py" afterPath="$PROJECT_DIR$/src/model_generation.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/model_selection_util.py" afterPath="$PROJECT_DIR$/src/process/model_selection_util.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/student_results_analysis.py" afterPath="$PROJECT_DIR$/src/student_results_analysis.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/utils.py" afterPath="$PROJECT_DIR$/src/process/utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/debug.log" afterPath="$PROJECT_DIR$/debug.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_generation.py" afterPath="$PROJECT_DIR$/model_generation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/student_results_analysis.py" afterPath="$PROJECT_DIR$/student_results_analysis.py" />
     </list>
     <ignored path="FYP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,27 +62,49 @@
     <favorites_list name="FYP" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.68">
+    <splitter split-orientation="horizontal" split-proportion="0.5283773">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="student_results_analysis.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/student_results_analysis.py">
+          <file leaf-file-name="student_results_analysis.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/student_results_analysis.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-840">
-                  <caret line="123" column="27" selection-start-line="123" selection-start-column="27" selection-end-line="123" selection-end-column="27" />
+                <state relative-caret-position="-1173">
+                  <caret line="81" column="43" selection-start-line="81" selection-start-column="43" selection-end-line="81" selection-end-column="43" />
                   <folding>
-                    <element signature="e#0#19#0" expanded="true" />
-                    <element signature="e#3233#3244#0" expanded="false" />
+                    <element signature="e#0#31#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="cluster_analysis.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/cluster_analysis.py">
+          <file leaf-file-name="model_generation.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/model_generation.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="289">
-                  <caret line="53" column="66" selection-start-line="53" selection-start-column="66" selection-end-line="53" selection-end-column="66" />
+                <state relative-caret-position="636">
+                  <caret line="140" column="24" selection-start-line="140" selection-start-column="24" selection-end-line="140" selection-end-column="24" />
+                  <folding>
+                    <element signature="e#0#17#0" expanded="true" />
+                    <marker date="1494409820104" expanded="true" signature="1077:1322" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="predictor.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/classes/predictor.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="459">
+                  <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="outlier_detector.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/classes/outlier_detector.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="367">
+                  <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -65,24 +112,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="model_generation.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/model_generation.py">
+          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/.gitignore">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1061">
-                  <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
-                  <folding>
-                    <element signature="e#0#95#0" expanded="true" />
-                    <marker date="1493998758598" expanded="true" signature="1148:1393" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="predictor.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/classes/predictor.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="561">
-                  <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+                <state relative-caret-position="34">
+                  <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
                   <folding />
                 </state>
               </provider>
@@ -92,49 +126,13 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="model_selection_util.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/model_selection_util.py">
+          <file leaf-file-name="cluster_analysis.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/cluster_analysis.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2448">
-                  <caret line="150" column="20" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
+                <state relative-caret-position="585">
+                  <caret line="102" column="37" selection-start-line="102" selection-start-column="37" selection-end-line="102" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="outlier_detector.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/classes/outlier_detector.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="663">
-                  <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/utils.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="636">
-                  <caret line="42" column="15" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
-                  <folding>
-                    <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="feature_transformer.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/feature_transformer.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-                  <folding>
-                    <element signature="e#0#19#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -162,13 +160,19 @@
         <option value="$PROJECT_DIR$/Scikit_example.ipynb" />
         <option value="$PROJECT_DIR$/Untitled.ipynb" />
         <option value="$PROJECT_DIR$/utils.py" />
-        <option value="$PROJECT_DIR$/feature_transformer.py" />
         <option value="$PROJECT_DIR$/outlier_detection.py" />
         <option value="$PROJECT_DIR$/model_selection_util.py" />
         <option value="$PROJECT_DIR$/models/predictor.py" />
         <option value="$PROJECT_DIR$/cluster_analysis.py" />
+        <option value="$PROJECT_DIR$/feature_transformer.py" />
         <option value="$PROJECT_DIR$/student_results_analysis.py" />
         <option value="$PROJECT_DIR$/model_generation.py" />
+        <option value="$PROJECT_DIR$/src/model_generation.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/student_results_analysis.py" />
+        <option value="$PROJECT_DIR$/src/classes/outlier_detector.py" />
+        <option value="$PROJECT_DIR$/src/cluster_analysis.py" />
+        <option value="$PROJECT_DIR$/src/process/model_selection_util.py" />
       </list>
     </option>
   </component>
@@ -209,8 +213,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -239,6 +243,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FYP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FYP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="classes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -248,7 +270,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/SRI research" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -256,6 +278,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vu Anh Vinh\FYP\src\process" />
+      <recent name="C:\Users\Vu Anh Vinh\FYP\src" />
+      <recent name="C:\Users\Vu Anh Vinh\FYP\process" />
       <recent name="C:\Users\Vu Anh Vinh\FYP\models" />
     </key>
   </component>
@@ -273,7 +298,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="FYP" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/student_results_analysis.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Vu Anh Vinh\FYP\src\student_results_analysis.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -515,12 +540,12 @@
     <frame x="-8" y="-8" width="1616" height="916" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1336761" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19601542" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32966322" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -574,16 +599,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/model_selection_util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="52" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Iris_classification.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
@@ -592,34 +607,31 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scikit_example.ipynb" />
-    <entry file="file://$PROJECT_DIR$/student_results_analysis.py">
+    <entry file="file://$PROJECT_DIR$/src/student_results_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="116" column="51" selection-start-line="116" selection-start-column="51" selection-end-line="116" selection-end-column="51" />
           <caret line="108" column="39" selection-start-line="108" selection-start-column="39" selection-end-line="108" selection-end-column="39" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#3233#3244#0" expanded="false" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feature_transformer.py">
+    <entry file="file://$PROJECT_DIR$/src/process/feature_transformer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_selection_util.py">
+    <entry file="file://$PROJECT_DIR$/src/process/model_selection_util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -632,23 +644,22 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scikit_example.ipynb" />
-    <entry file="file://$PROJECT_DIR$/student_results_analysis.py">
+    <entry file="file://$PROJECT_DIR$/src/student_results_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#3233#3244#0" expanded="false" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_selection_util.py">
+    <entry file="file://$PROJECT_DIR$/src/process/model_selection_util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -662,13 +673,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scikit_example.ipynb" />
     <entry file="file://$PROJECT_DIR$/Untitled.ipynb" />
-    <entry file="file://$PROJECT_DIR$/student_results_analysis.py">
+    <entry file="file://$PROJECT_DIR$/src/student_results_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#3233#3244#0" expanded="false" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -784,101 +794,107 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dt.png">
+    <entry file="file://$PROJECT_DIR$/src/dt.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dt.dot">
+    <entry file="file://$PROJECT_DIR$/src/dt.dot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/outlier_detector.py">
+    <entry file="file://$PROJECT_DIR$/src/Student Results.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model_selection_util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="150" column="20" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/feature_transformer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="636">
-          <caret line="42" column="15" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/predictor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+        <state relative-caret-position="-942">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_generation.py">
+    <entry file="file://$PROJECT_DIR$/src/process/feature_transformer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1061">
-          <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
+        <state relative-caret-position="-2166">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/process/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
           <folding>
-            <element signature="e#0#95#0" expanded="true" />
-            <marker date="1493998758598" expanded="true" signature="1148:1393" ph="..." />
+            <element signature="e#0#10#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/student_results_analysis.py">
+    <entry file="file://$PROJECT_DIR$/src/process/model_selection_util.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-840">
-          <caret line="123" column="27" selection-start-line="123" selection-start-column="27" selection-end-line="123" selection-end-column="27" />
+        <state relative-caret-position="415">
+          <caret line="175" column="14" selection-start-line="175" selection-start-column="14" selection-end-line="175" selection-end-column="14" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#3233#3244#0" expanded="false" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_analysis.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="53" column="66" selection-start-line="53" selection-start-column="66" selection-end-line="53" selection-end-column="66" />
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cluster_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="102" column="37" selection-start-line="102" selection-start-column="37" selection-end-line="102" selection-end-column="37" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/outlier_detector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/predictor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model_generation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="636">
+          <caret line="140" column="24" selection-start-line="140" selection-start-column="24" selection-end-line="140" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+            <marker date="1494409820104" expanded="true" signature="1077:1322" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/student_results_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1173">
+          <caret line="81" column="43" selection-start-line="81" selection-start-column="43" selection-end-line="81" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>

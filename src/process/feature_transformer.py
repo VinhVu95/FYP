@@ -128,7 +128,7 @@ def feature_importance(x, y, transform=False, th=None):
     """
     clf = ExtraTreesRegressor(min_samples_split=3, min_samples_leaf=3, max_depth=5)
     clf = clf.fit(x, y)
-    if transform == True:
+    if transform is True:
         model = SelectFromModel(clf, threshold=th, prefit=True)
         x_transform = model.transform(x)
     importances = clf.feature_importances_

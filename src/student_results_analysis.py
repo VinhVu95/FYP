@@ -1,38 +1,32 @@
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-
-from sklearn.tree import DecisionTreeRegressor,export_graphviz
-
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVR
+import numpy as np
+import pandas as pd
+from classes.predictor import Regressor
+from process.model_selection_util import best_config, cv_score_gen,plot_learning_curve
+from sklearn.model_selection import ShuffleSplit
+from sklearn.tree import DecisionTreeRegressor
 
 from classes.outlier_detector import OutlierDetector
-from classes.predictor import Regressor
-from model_selection_util import best_config,best_model,cv_score_gen,plot_learning_curve
-from feature_transformer import one_hot_dataframe, scaling_feature, encode_final_score, add_polynomial_features, \
-                                remove_low_variance_features, feature_importance, extract_test_set
-from model_generation import regression_families, classification_families, visualize_tree
 from cluster_analysis import visualise_cluster3d
-
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.model_selection import ShuffleSplit
+from model_generation import regression_families, visualize_tree
+from process.feature_transformer import one_hot_dataframe, scaling_feature, add_polynomial_features, \
+    feature_importance
 
 """Pre-process raw data"""
 data = pd.read_csv("Student Results.csv")
-# drop empty row from table
+"""drop empty row from table"""
 result = data.dropna()
-# drop student did not attend final
+"""drop student did not attend final"""
 result = result[result['F'] != 'ABS']
-# after deleting row with student absent in final, the index not shift back -> reindex, and then drop the column 'index'
+"""after deleting row with student absent in final, the index not shift back -> reindex, and then drop the column 'index'"""
 result = result.reset_index().drop('index', axis=1)
 
-# convert data type of marks to int and float
+"""convert data type of marks to int and float"""
 result.ix[:, 0] = result.ix[:, 0].astype(int)
 result.ix[:, 3:7] = result.ix[:, 3:7].astype(float)
 result.ix[:, 10:19] = result.ix[:, 10:19].astype(float)
 
-# store meta data for the table
+"""store meta data for the table"""
 meta_data_1 = {'Max': [100, 40, 10, 50, 20, 30, 20, 70, 100, 100, 25, 25, 25, 25, 100, 100],
              'Weightage': [4, 9.6, 2.4, 12, 3.4, 5.2, 3.4, 12, 12, 40, 15, 15, 15, 15, 60, 100.00]}
 meta_data_2 = {'Max': [4],
@@ -44,7 +38,7 @@ meta_frame = pd.concat([meta_frame_1, meta_frame_2], axis=0)
 
 """Detect outlier"""
 od = OutlierDetector()
-# find outliers for each assignment (store the index of the rows)
+"""find outliers for each assignment (store the index of the rows)"""
 outliers_bool_ca1 = od.mad_based_outlier(result.ix[:, 'C1'])
 outliers_ca1_index = [i for i in range(len(outliers_bool_ca1)) if outliers_bool_ca1[i]==True]
 
@@ -63,10 +57,6 @@ outliers_final_index = [i for i in range(len(outliers_bool_final)) if outliers_b
 x = result.ix[:, ['Background1', 'Background2', 'C1', 'C2-1', 'C2-2', 'C3-1', 'C3-2', 'C3-3', 'C4']]
 print("input attributes :" + str(x.columns.tolist()))
 print("output target: E")
-
-# TODO predict final results based on CA1 scores, CA2 scores,... according to time
-def predict_final_scores_chronologically(*features):
-    return None
 
 
 def detect_outlier_students():
@@ -207,4 +197,7 @@ repeat = 1
 
 "4. Increase polynomial degree for under-fit classes"
 # simulation(plot_learn_curve=True,add_poly=True)
+
+"5. Cluster analysis"
+# cluster()
 

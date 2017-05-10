@@ -9,6 +9,17 @@ from time import time
 
 
 def kmeans_on_pca_reduce(data, *num_clusters, use_pca=False):
+    """
+    perform k means clustering algorithm on principal component or original attributes
+    Args:
+        data: Panda Dataframe or numpy array
+            original dataset (without target attributes)
+        *num_clusters: different cluster instance
+        use_pca: indicate if use PCA technique
+
+    Returns: pca reduced (or original) data table, k means estimator
+
+    """
     if use_pca is True:
         reduced_data = PCA(n_components=3).fit_transform(data)
     km_estimators = []
@@ -51,7 +62,7 @@ def visualise_cluster3d(data, *num_clusters, label=None, use_pca=True):
     for est in km_estimators:
         fig = plt.figure(fignum, figsize=(4, 3))
         plt.clf()
-        ax = Axes3D(fig, rect=[0, 0, 1.5, 1.8], elev=48, azim=134)
+        ax = Axes3D(fig, rect=[0, 0, 1.6, 1.8], elev=48, azim=134)
 
         plt.cla()
         est.fit(_data)
@@ -67,6 +78,17 @@ def visualise_cluster3d(data, *num_clusters, label=None, use_pca=True):
 
 
 def bench_k_means(estimator, name, data, labels):
+    """
+    Bench mark k means
+    Args:
+        estimator: k means estimator
+        name: PCA-based
+        data: input data
+        labels: target label (if provided)
+
+    Returns: None
+
+    """
     sample_size=300
     t0 = time()
     estimator.fit(data)
